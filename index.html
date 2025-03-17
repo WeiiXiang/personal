@@ -8,35 +8,58 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- 导航栏 -->
-    <nav>
-        <div class="container">
-            <a href="#" class="logo">Personal Website</a>
-            <ul>
-                <li><a href="#about">About Me</a></li>
-                <li><a href="#hobbies">Still thinking</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-            </ul>
-        </div>
-    </nav>
+    <!-- 3D 背景覆盖 nav 和 header -->
+    <div class="hero">
+        <!-- 3D 背景 -->
+        <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.79/build/spline-viewer.js"></script>
+        <spline-viewer url="https://prod.spline.design/KPKwhOTAKejPFER2/scene.splinecode"></spline-viewer>
 
-    <!-- 首页横幅 -->
-    <header>
-        <div class="container">
-            <h1>Welcome To My Personal Website~</h1>
-            <p>这里是我分享生活点滴的地方~</p>
+        <!-- 导航栏 -->
+        <nav>
+            <div class="container">
+                <a href="#" class="logo">Personal Website</a>
+                <ul>
+                    <li><a href="#about">About Me</a></li>
+                    <li><a href="#hobbies">Still thinking</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- 首页横幅 -->
+        <header>
+            <div class="container">
+                <h1>Welcome To My Personal Website~</h1>
+                <p>这里是我分享生活点滴的地方~</p>
+            </div>
+        </header>
+    </div>
+
+    <!-- 3D 数字时钟 -->
+    <div id="digital-clock">
+        <div class="clock-face">
+            <span id="hours">00</span>:
+            <span id="minutes">00</span>:
+            <span id="seconds">00</span>
         </div>
-    </header>
+    </div>
+
+    <!-- 音乐播放器 -->
+    <audio id="background-music" loop>
+        <source src="audio/background-music.mp3" type="audio/mpeg">
+        您的浏览器不支持音频播放。
+    </audio>
+
+    <!-- 音乐控制按钮 -->
+    <button id="music-toggle" onclick="toggleMusic()">暂停音乐</button>
 
     <!-- 关于我 -->
     <section id="about" class="section">
         <div class="container">
-            <h2>About <Menu></Menu></h2>
-            <p>hello everybody~~ I m Weii Xiang</p>
+            <h2>About Me</h2>
+            <p>hello everybody~~ I'm Weii Xiang</p>
         </div>
     </section>
-
-
 
     <!-- 相册 -->
     <section id="gallery" class="section">
@@ -55,5 +78,48 @@
             <p>&copy; 2023 个人网站. 保留所有权利。</p>
         </div>
     </footer>
+
+    <!-- JavaScript 实现动态时间和音乐控制 -->
+    <script>
+        // 动态时间
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            // 更新时间显示
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+
+        // 每秒更新一次时间
+        setInterval(updateTime, 1000);
+        updateTime(); // 初始化时间
+
+        // 音乐控制
+        const music = document.getElementById('background-music');
+        const toggleButton = document.getElementById('music-toggle');
+
+        // 自动播放音乐（需要用户与页面交互）
+        document.addEventListener('click', () => {
+            if (music.paused) {
+                music.play();
+                toggleButton.textContent = '暂停音乐';
+            }
+        }, { once: true }); // 只执行一次
+
+        // 切换音乐播放状态
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                toggleButton.textContent = '暂停音乐';
+            } else {
+                music.pause();
+                toggleButton.textContent = '播放音乐';
+            }
+        }
+    </script>
 </body>
 </html>
